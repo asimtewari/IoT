@@ -1,3 +1,4 @@
+```mermaid
 graph TD
     A[Start] --> B[Setup]
     B --> C[Initialize Serial Communication]
