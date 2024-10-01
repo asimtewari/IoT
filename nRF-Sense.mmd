@@ -1,6 +1,44 @@
-flowchart LR
-
-A[Hard] -->|Text| B(Round)
-B --> C{Decision}
-C -->|One| D[Result 1]
-C -->|Two| E[Result 2]
+graph TD
+    A[Start] --> B[Setup]
+    B --> C[Initialize Serial Communication]
+    B --> D[Enable DCDC Converter]
+    B --> E[Begin Flash Transport]
+    B --> F[Begin LSM6DS3 Communication]
+    B --> G[Begin Bluefruit BLE Setup]
+    B --> H[Setup BLE Services and Advertising]
+    B --> I[Calibrate Accelerometer]
+    
+    A1[Loop] --> J[Check Motor Status]
+    J --> K[Set IMU Mode]
+    J --> L[Collect IMU Data]
+    L --> M[Check Threshold]
+    M --> N{Above Threshold?}
+    N -->|Yes| O[Motor On]
+    N -->|No| P[Motor Off]
+    
+    O --> Q[Advertise Motor Status]
+    P --> R[Advertise Motor Off Status]
+    
+    O --> S{Initial Reading Taken?}
+    S -->|No| T[Take IMU Reading]
+    S -->|Yes| U[Send Data]
+    U --> W[Restart Advertising]
+    
+    subgraph BLE Interaction
+        H --> X[Connect Callback]
+        H --> Y[Disconnect Callback]
+        X --> Z[Request MTU and Adjust Connection Parameters]
+    end
+    
+    subgraph IMU Setup
+        F --> AA[IMU Setup for High/Low Performance]
+        AA --> AB[Enable/Disable Gyro]
+        AB --> AC[Set Accelerometer and Gyro Parameters]
+    end
+    
+    subgraph Debug Mode
+        C --> AD{DEBUG Enabled?}
+        AD -->|Yes| AE[Enable Serial Debugging]
+        AD -->|No| AF[Disable Debugging]
+        AE --> AG[Print Status Every 5 seconds]
+    end
