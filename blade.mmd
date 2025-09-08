@@ -1,0 +1,16 @@
+ A[Start / System self-checks<br/>(balance, cameras, lights, dial gauge, comms)] --> B[Place blade on balance fixture]
+  B --> C{Balance stable?}
+  C -- No --> C
+  C -- Yes --> D[Trigger multi-illumination capture<br/>(cycle lights; capture from all cameras)]
+  D --> E[OCR alphanumeric ID<br/>(text + confidence + crop image)]
+  E --> F[Record stabilized weight from balance]
+  F --> G[HMI prompt: move blade to dial gauge]
+  G --> H{Dial gauge stable?}
+  H -- No --> H
+  H -- Yes --> I[Capture dial gauge reading]
+  I --> J[Review screen: ID (w/ confidence), weight, dial reading + images]
+  J --> K{Operator accepts?}
+  K -- No --> L[Re-acquire step(s) or flag for rework]
+  L --> J
+  K -- Yes --> M[Save to spreadsheet + archive images + log metadata]
+  M --> N[End / Next blade] 	 
