@@ -1,5 +1,5 @@
 graph TD
-A[Start / System self-checks<br/>(balance, cameras, lights, dial gauge, comms)] --> B[Place blade on balance fixture]
+  A[Start / System self-checks<br/>(balance, cameras, lights, dial gauge, comms)] --> B[Place blade on balance fixture]
   B --> C{Balance stable?}
   C -- No --> C
   C -- Yes --> D[Trigger multi-illumination capture<br/>(cycle lights; capture from all cameras)]
@@ -14,5 +14,4 @@ A[Start / System self-checks<br/>(balance, cameras, lights, dial gauge, comms)] 
   K -- No --> L[Re-acquire step(s) or flag for rework]
   L --> J
   K -- Yes --> M[Save to spreadsheet + archive images + log metadata]
-
-  M --> N[End / Next blade] 	 
+  M --> N[End / Next blade]
